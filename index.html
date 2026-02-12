@@ -3,201 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>San Valentín 💖</title>
+<title>Para Ti ❤️</title>
 
 <style>
-body{
-    margin:0;
-    overflow:hidden;
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url("fondo.jpg") no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: Arial, sans-serif;
-    text-align:center;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    color:white;
-    position:relative;
+    text-align: center;
+    color: white;
 }
 
-/* Fondo con imagen */
-body::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: url('fondo.jpg') center center/cover no-repeat;
-    filter: brightness(0.6);
-    z-index:-2;
-    animation: zoomFondo 20s infinite alternate ease-in-out;
+.contenido {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 20px;
 }
 
-/* Capa oscura elegante */
-body::after{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.4);
-    z-index:-1;
+h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
 }
 
-@keyframes zoomFondo{
-    from{transform:scale(1);}
-    to{transform:scale(1.1);}
-}
-
-h1{
-    font-size:2.5em;
-    animation: latido 1s infinite;
-}
-
-@keyframes latido{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.1);}
-    100%{transform:scale(1);}
-}
-
-button{
-    padding:15px 40px;
-    font-size:20px;
-    margin:20px;
-    border:none;
-    border-radius:50px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-#si{
-    background:#ff0066;
-    box-shadow:0 0 25px white;
-}
-
-#no{
-    background:#333;
-    position:absolute;
-}
-
-#pantallaFinal{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    animation: aparecer 1s ease forwards;
-}
-
-@keyframes aparecer{
-    from{opacity:0;}
-    to{opacity:1;}
-}
-
-.mensajeFinal{
-    font-size:3em;
-    animation: zoom 1s ease infinite alternate;
-}
-
-@keyframes zoom{
-    from{transform:scale(1);}
-    to{transform:scale(1.15);}
-}
-
-.efecto{
-    position:absolute;
-    font-size:25px;
-    animation: caer 4s linear infinite;
-}
-
-@keyframes caer{
-    from{
-        transform:translateY(-10vh) rotate(0deg);
-        opacity:1;
-    }
-    to{
-        transform:translateY(110vh) rotate(360deg);
-        opacity:0;
-    }
+p {
+    font-size: 1.5em;
 }
 </style>
 </head>
 
 <body>
 
-<h1>¿Quieres ser mi cita de San Valentín? 💕</h1>
-
-<button id="si">Sí 💖</button>
-<button id="no">No 😢</button>
-
-<div id="pantallaFinal">
-    <div class="mensajeFinal">
-        💌 CITA CONFIRMADA 💌 <br><br>
-        14 de Febrero - 5:00 p.m <br>
-        Vestirse bien guapa 💃✨ <br><br>
-        💖 Será una noche inolvidable 💖
-    </div>
+<div class="contenido">
+    <h1>Feliz San Valentín ❤️</h1>
+    <p>Eres la persona más especial en mi vida 💕</p>
+    <p>Toca la pantalla para escuchar nuestra canción 🎵</p>
 </div>
 
+<audio id="musica" loop>
+    <source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-let botonSi = document.getElementById("si");
-let botonNo = document.getElementById("no");
-let pantallaFinal = document.getElementById("pantallaFinal");
-let tamañoSi = 20;
-
-// El botón NO huye
-botonNo.addEventListener("mouseover", function(){
-    let x = Math.random() * (window.innerWidth - 100);
-    let y = Math.random() * (window.innerHeight - 50);
-    botonNo.style.left = x + "px";
-    botonNo.style.top = y + "px";
+document.addEventListener("click", function () {
+    document.getElementById("musica").play();
 });
-
-// Hace crecer el botón SI
-botonNo.addEventListener("click", function(){
-    tamañoSi += 15;
-    botonSi.style.fontSize = tamañoSi + "px";
-});
-
-// Pantalla final épica
-botonSi.addEventListener("click", function(){
-    pantallaFinal.style.display = "flex";
-    document.querySelector("h1").style.display = "none";
-    botonSi.style.display = "none";
-    botonNo.style.display = "none";
-    crearEfectos();
-});
-
-// Lluvia intensa de corazones y efectos
-function crearEfectos(){
-    setInterval(()=>{
-        let elemento = document.createElement("div");
-        elemento.classList.add("efecto");
-
-        let emojis = ["💖","💘","💝","💞","🌹","✨","🎆"];
-        elemento.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
-
-        elemento.style.left = Math.random() * window.innerWidth + "px";
-        elemento.style.fontSize = (Math.random()*30+20)+"px";
-
-        document.body.appendChild(elemento);
-
-        setTimeout(()=>{
-            elemento.remove();
-        },4000);
-
-    },120);
-}
 </script>
 
 </body>
 </html>
+
+
 
 
