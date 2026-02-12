@@ -15,25 +15,20 @@ body {
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
-    overflow: hidden;
 }
 
 .contenedor {
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.7);
     padding: 40px;
     border-radius: 20px;
     text-align: center;
     color: white;
+    position: relative;
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: 2.2em;
     margin-bottom: 30px;
-}
-
-.botones {
-    position: relative;
-    height: 100px;
 }
 
 button {
@@ -62,28 +57,20 @@ button {
 }
 
 .mensaje-final {
-    font-size: 2em;
+    font-size: 1.8em;
     display: none;
     margin-top: 20px;
-    animation: aparecer 1s ease-in-out;
-}
-
-@keyframes aparecer {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="contenedor">
+<div class="contenedor" id="caja">
     <h1>¿Quieres ser mi San Valentín? ❤️</h1>
 
-    <div class="botones">
-        <button id="si" onclick="aceptar()">Sí 💖</button>
-        <button id="no" onmouseover="moverNo()">No 😢</button>
-    </div>
+    <button id="si" onclick="aceptar()">Sí 💖</button>
+    <button id="no" onmouseover="moverNo()">No 😢</button>
 
     <div class="mensaje-final" id="mensaje">
         Sabía que dirías que sí 😍💘 Te amo muchísimo ❤️
@@ -101,26 +88,34 @@ document.addEventListener("click", function () {
     document.getElementById("musica").play();
 }, { once: true });
 
-// Botón No se mueve
+// Botón No se mueve dentro de la caja
 function moverNo() {
-    const botonNo = document.getElementById("no");
-    const ancho = window.innerWidth - 100;
-    const alto = window.innerHeight - 100;
+    const boton = document.getElementById("no");
+    const caja = document.getElementById("caja");
 
-    botonNo.style.left = Math.random() * ancho + "px";
-    botonNo.style.top = Math.random() * alto + "px";
+    const maxX = caja.clientWidth - boton.offsetWidth;
+    const maxY = caja.clientHeight - boton.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    boton.style.left = randomX + "px";
+    boton.style.top = randomY + "px";
 }
 
 // Cuando dice que sí
 function aceptar() {
     document.getElementById("mensaje").style.display = "block";
-    document.querySelector(".botones").style.display = "none";
+    document.getElementById("si").style.display = "none";
+    document.getElementById("no").style.display = "none";
 }
 
 </script>
 
 </body>
 </html>
+
+
 
 
 
