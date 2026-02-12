@@ -3,43 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿Quieres ser mi San Valentín? ❤️</title>
+<title>San Valentín 💖</title>
 
 <style>
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background: url("fondo.jpg") no-repeat center center/cover;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+    background: url("fondo.jpg") center/cover no-repeat fixed;
 }
 
-.contenedor {
-    background: rgba(0,0,0,0.7);
+.overlay {
+    background: rgba(0,0,0,0.6);
     padding: 40px;
     border-radius: 20px;
-    text-align: center;
     color: white;
+    text-align: center;
+    backdrop-filter: blur(10px);
     position: relative;
-    width: 300px;
 }
 
 h1 {
-    font-size: 1.8em;
-    margin-bottom: 30px;
+    font-size: 40px;
 }
 
 button {
-    padding: 12px 25px;
-    font-size: 1em;
+    padding: 15px 30px;
+    font-size: 20px;
+    margin: 15px;
     border: none;
-    border-radius: 25px;
+    border-radius: 50px;
     cursor: pointer;
-    margin: 10px;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 #si {
@@ -47,67 +47,74 @@ button {
     color: white;
 }
 
-#si:hover {
-    transform: scale(1.1);
-}
-
 #no {
-    background-color: gray;
+    background-color: #444;
     color: white;
     position: absolute;
 }
 
-.mensaje-final {
-    font-size: 1.5em;
+.hidden {
     display: none;
-    margin-top: 20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="contenedor" id="caja">
+<div class="overlay" id="pantalla1">
     <h1>¿Quieres ser mi San Valentín? ❤️</h1>
-
-    <button id="si" onclick="aceptar()">Sí 💖</button>
-    <button id="no" onmouseover="moverNo()">No 😢</button>
-
-    <div class="mensaje-final" id="mensaje">
-        Sabía que dirías que sí 😍💘 Te amo muchísimo ❤️
-    </div>
+    <button id="si">Sí 💘</button>
+    <button id="no">No 😢</button>
 </div>
 
-<audio id="musica" loop>
-    <source src="cancion.mp3" type="audio/mpeg">
+<div class="overlay hidden" id="pantalla2">
+    <h1>💖 Sabía que dirías que sí 💖</h1>
+    <p style="font-size:22px;">
+        💌 Cita del 14 de Febrero <br><br>
+        🕔 A las 5:00 p.m. <br><br>
+        ✨ Vestirse bien guapa ✨
+    </p>
+</div>
+
+<audio id="musica">
+    <source src="ReinaPepiada.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+let siBtn = document.getElementById("si");
+let noBtn = document.getElementById("no");
+let pantalla1 = document.getElementById("pantalla1");
+let pantalla2 = document.getElementById("pantalla2");
+let musica = document.getElementById("musica");
 
-// Botón No se mueve dentro del cuadro
-function moverNo() {
-    const boton = document.getElementById("no");
-    const caja = document.getElementById("caja");
+// FUNCIÓN PARA MOVER EL BOTÓN NO
+function moverBoton() {
+    let ancho = window.innerWidth - noBtn.offsetWidth;
+    let alto = window.innerHeight - noBtn.offsetHeight;
 
-    const maxX = caja.clientWidth - boton.offsetWidth;
-    const maxY = caja.clientHeight - boton.offsetHeight;
+    let randomX = Math.random() * ancho;
+    let randomY = Math.random() * alto;
 
-    boton.style.left = Math.random() * maxX + "px";
-    boton.style.top = Math.random() * maxY + "px";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
 }
 
-// Cuando dice que sí
-function aceptar() {
-    document.getElementById("musica").play(); // 🎵 aquí se activa la música
-    document.getElementById("mensaje").style.display = "block";
-    document.getElementById("si").style.display = "none";
-    document.getElementById("no").style.display = "none";
-}
+// Se mueve cuando intentan tocarlo
+noBtn.addEventListener("mouseover", moverBoton);
+noBtn.addEventListener("click", moverBoton);
 
+// Cuando presiona SÍ
+siBtn.addEventListener("click", function() {
+    pantalla1.classList.add("hidden");
+    pantalla2.classList.remove("hidden");
+    musica.play();
+});
 </script>
 
 </body>
 </html>
+
+
 
 
 
