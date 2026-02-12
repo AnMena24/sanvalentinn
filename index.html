@@ -3,129 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Ti ❤️</title>
+<title>¿Quieres ser mi San Valentín? ❤️</title>
 
 <style>
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden;
     background: url("fondo.jpg") no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.contenedor {
+    background: rgba(0,0,0,0.6);
+    padding: 40px;
+    border-radius: 20px;
     text-align: center;
     color: white;
 }
 
-.contenido {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 40px;
-    border-radius: 20px;
-    animation: fadeIn 2s ease-in-out;
-}
-
 h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-    animation: latido 1.5s infinite;
+    font-size: 2.5em;
+    margin-bottom: 30px;
 }
 
-p {
-    font-size: 1.5em;
+.botones {
+    position: relative;
+    height: 100px;
 }
 
 button {
-    margin-top: 20px;
     padding: 15px 30px;
     font-size: 1.2em;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    background-color: #ff4d6d;
-    color: white;
+    margin: 10px;
     transition: 0.3s;
 }
 
-button:hover {
-    background-color: #ff1e4d;
+#si {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+#si:hover {
     transform: scale(1.1);
 }
 
-@keyframes fadeIn {
+#no {
+    background-color: gray;
+    color: white;
+    position: absolute;
+}
+
+.mensaje-final {
+    font-size: 2em;
+    display: none;
+    margin-top: 20px;
+    animation: aparecer 1s ease-in-out;
+}
+
+@keyframes aparecer {
     from { opacity: 0; }
     to { opacity: 1; }
-}
-
-@keyframes latido {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.corazon {
-    position: absolute;
-    color: pink;
-    font-size: 20px;
-    animation: flotar 5s linear infinite;
-}
-
-@keyframes flotar {
-    from {
-        transform: translateY(100vh);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="contenido">
-    <h1>Feliz San Valentín ❤️</h1>
-    <p>Eres la persona más especial en mi vida 💕</p>
-    <p>Toca la pantalla para activar la música 🎵</p>
-    <button onclick="mostrarSorpresa()">Haz clic aquí 💌</button>
+<div class="contenedor">
+    <h1>¿Quieres ser mi San Valentín? ❤️</h1>
+
+    <div class="botones">
+        <button id="si" onclick="aceptar()">Sí 💖</button>
+        <button id="no" onmouseover="moverNo()">No 😢</button>
+    </div>
+
+    <div class="mensaje-final" id="mensaje">
+        Sabía que dirías que sí 😍💘 Te amo muchísimo ❤️
+    </div>
 </div>
 
 <audio id="musica" loop>
-    <source src="ReinaPepiada.mp3" type="audio/mpeg">
+    <source src="cancion.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+
+// Música al primer clic
 document.addEventListener("click", function () {
     document.getElementById("musica").play();
 }, { once: true });
 
-function mostrarSorpresa() {
-    alert("Gracias por existir ❤️ Te amo muchísimo 💕");
+// Botón No se mueve
+function moverNo() {
+    const botonNo = document.getElementById("no");
+    const ancho = window.innerWidth - 100;
+    const alto = window.innerHeight - 100;
+
+    botonNo.style.left = Math.random() * ancho + "px";
+    botonNo.style.top = Math.random() * alto + "px";
 }
 
-function crearCorazon() {
-    const corazon = document.createElement("div");
-    corazon.classList.add("corazon");
-    corazon.innerHTML = "❤️";
-    corazon.style.left = Math.random() * 100 + "vw";
-    corazon.style.fontSize = (Math.random() * 20 + 10) + "px";
-    corazon.style.animationDuration = (Math.random() * 3 + 2) + "s";
-    document.body.appendChild(corazon);
-
-    setTimeout(() => {
-        corazon.remove();
-    }, 5000);
+// Cuando dice que sí
+function aceptar() {
+    document.getElementById("mensaje").style.display = "block";
+    document.querySelector(".botones").style.display = "none";
 }
 
-setInterval(crearCorazon, 300);
 </script>
 
 </body>
 </html>
+
+
 
 
 
