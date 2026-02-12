@@ -24,18 +24,19 @@ body {
     text-align: center;
     color: white;
     position: relative;
+    width: 300px;
 }
 
 h1 {
-    font-size: 2.2em;
+    font-size: 1.8em;
     margin-bottom: 30px;
 }
 
 button {
-    padding: 15px 30px;
-    font-size: 1.2em;
+    padding: 12px 25px;
+    font-size: 1em;
     border: none;
-    border-radius: 30px;
+    border-radius: 25px;
     cursor: pointer;
     margin: 10px;
     transition: 0.3s;
@@ -57,7 +58,7 @@ button {
 }
 
 .mensaje-final {
-    font-size: 1.8em;
+    font-size: 1.5em;
     display: none;
     margin-top: 20px;
 }
@@ -83,12 +84,7 @@ button {
 
 <script>
 
-// Música al primer clic
-document.addEventListener("click", function () {
-    document.getElementById("musica").play();
-}, { once: true });
-
-// Botón No se mueve dentro de la caja
+// Botón No se mueve dentro del cuadro
 function moverNo() {
     const boton = document.getElementById("no");
     const caja = document.getElementById("caja");
@@ -96,15 +92,13 @@ function moverNo() {
     const maxX = caja.clientWidth - boton.offsetWidth;
     const maxY = caja.clientHeight - boton.offsetHeight;
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
-
-    boton.style.left = randomX + "px";
-    boton.style.top = randomY + "px";
+    boton.style.left = Math.random() * maxX + "px";
+    boton.style.top = Math.random() * maxY + "px";
 }
 
 // Cuando dice que sí
 function aceptar() {
+    document.getElementById("musica").play(); // 🎵 aquí se activa la música
     document.getElementById("mensaje").style.display = "block";
     document.getElementById("si").style.display = "none";
     document.getElementById("no").style.display = "none";
@@ -114,6 +108,8 @@ function aceptar() {
 
 </body>
 </html>
+
+
 
 
 
