@@ -6,113 +6,201 @@
 <title>San Valentín 💖</title>
 
 <style>
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
+body{
+    margin:0;
+    overflow:hidden;
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: url("fondo.jpg") center/cover no-repeat fixed;
+    text-align:center;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    position:relative;
 }
 
-.overlay {
-    background: rgba(0,0,0,0.6);
-    padding: 40px;
-    border-radius: 20px;
-    color: white;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    position: relative;
+/* Fondo con imagen */
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: url('fondo.jpg') center center/cover no-repeat;
+    filter: brightness(0.6);
+    z-index:-2;
+    animation: zoomFondo 20s infinite alternate ease-in-out;
 }
 
-h1 {
-    font-size: 40px;
+/* Capa oscura elegante */
+body::after{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.4);
+    z-index:-1;
 }
 
-button {
-    padding: 15px 30px;
-    font-size: 20px;
-    margin: 15px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.3s ease;
+@keyframes zoomFondo{
+    from{transform:scale(1);}
+    to{transform:scale(1.1);}
 }
 
-#si {
-    background-color: #ff4d6d;
-    color: white;
+h1{
+    font-size:2.5em;
+    animation: latido 1s infinite;
 }
 
-#no {
-    background-color: #444;
-    color: white;
-    position: absolute;
+@keyframes latido{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
 }
 
-.hidden {
-    display: none;
+button{
+    padding:15px 40px;
+    font-size:20px;
+    margin:20px;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#si{
+    background:#ff0066;
+    box-shadow:0 0 25px white;
+}
+
+#no{
+    background:#333;
+    position:absolute;
+}
+
+#pantallaFinal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    animation: aparecer 1s ease forwards;
+}
+
+@keyframes aparecer{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.mensajeFinal{
+    font-size:3em;
+    animation: zoom 1s ease infinite alternate;
+}
+
+@keyframes zoom{
+    from{transform:scale(1);}
+    to{transform:scale(1.15);}
+}
+
+.efecto{
+    position:absolute;
+    font-size:25px;
+    animation: caer 4s linear infinite;
+}
+
+@keyframes caer{
+    from{
+        transform:translateY(-10vh) rotate(0deg);
+        opacity:1;
+    }
+    to{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay" id="pantalla1">
-    <h1>¿Quieres ser mi San Valentín? ❤️</h1>
-    <button id="si">Sí 💘</button>
-    <button id="no">No 😢</button>
-</div>
+<h1>¿Quieres ser mi cita de San Valentín? 💕</h1>
 
-<div class="overlay hidden" id="pantalla2">
-    <h1>💖 Sabía que dirías que sí 💖</h1>
-    <p style="font-size:22px;">
-        💌 Cita del 14 de Febrero <br><br>
-        🕔 A las 5:00 p.m. <br><br>
-        ✨ Vestirse bien guapa ✨
-    </p>
-</div>
+<button id="si">Sí 💖</button>
+<button id="no">No 😢</button>
 
-<audio id="musica">
-    <source src="ReinaPepiada.mp3" type="audio/mpeg">
-</audio>
+<div id="pantallaFinal">
+    <div class="mensajeFinal">
+        💌 CITA CONFIRMADA 💌 <br><br>
+        14 de Febrero - 5:00 p.m <br>
+        Vestirse bien guapa 💃✨ <br><br>
+        💖 Será una noche inolvidable 💖
+    </div>
+</div>
 
 <script>
-let siBtn = document.getElementById("si");
-let noBtn = document.getElementById("no");
-let pantalla1 = document.getElementById("pantalla1");
-let pantalla2 = document.getElementById("pantalla2");
-let musica = document.getElementById("musica");
+let botonSi = document.getElementById("si");
+let botonNo = document.getElementById("no");
+let pantallaFinal = document.getElementById("pantallaFinal");
+let tamañoSi = 20;
 
-// FUNCIÓN PARA MOVER EL BOTÓN NO
-function moverBoton() {
-    let ancho = window.innerWidth - noBtn.offsetWidth;
-    let alto = window.innerHeight - noBtn.offsetHeight;
-
-    let randomX = Math.random() * ancho;
-    let randomY = Math.random() * alto;
-
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
-}
-
-// Se mueve cuando intentan tocarlo
-noBtn.addEventListener("mouseover", moverBoton);
-noBtn.addEventListener("click", moverBoton);
-
-// Cuando presiona SÍ
-siBtn.addEventListener("click", function() {
-    pantalla1.classList.add("hidden");
-    pantalla2.classList.remove("hidden");
-    musica.play();
+// El botón NO huye
+botonNo.addEventListener("mouseover", function(){
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+    botonNo.style.left = x + "px";
+    botonNo.style.top = y + "px";
 });
+
+// Hace crecer el botón SI
+botonNo.addEventListener("click", function(){
+    tamañoSi += 15;
+    botonSi.style.fontSize = tamañoSi + "px";
+});
+
+// Pantalla final épica
+botonSi.addEventListener("click", function(){
+    pantallaFinal.style.display = "flex";
+    document.querySelector("h1").style.display = "none";
+    botonSi.style.display = "none";
+    botonNo.style.display = "none";
+    crearEfectos();
+});
+
+// Lluvia intensa de corazones y efectos
+function crearEfectos(){
+    setInterval(()=>{
+        let elemento = document.createElement("div");
+        elemento.classList.add("efecto");
+
+        let emojis = ["💖","💘","💝","💞","🌹","✨","🎆"];
+        elemento.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+
+        elemento.style.left = Math.random() * window.innerWidth + "px";
+        elemento.style.fontSize = (Math.random()*30+20)+"px";
+
+        document.body.appendChild(elemento);
+
+        setTimeout(()=>{
+            elemento.remove();
+        },4000);
+
+    },120);
+}
 </script>
 
 </body>
 </html>
+
+
 
 
 
